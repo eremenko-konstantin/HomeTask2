@@ -135,15 +135,17 @@ public class HomeTask2 {
      * @return
      */
     public static int product(int first, int second) {
-        if(second > 1) {
+        if(second > 0) {
             return first + product(first, --second);
         }
-        return first;
+        else{
+            return first * second;
+        }
     }
 
     public static void main(String[] args) {
         System.out.println(decimalToBinary(8));
         System.out.println(decimalToOctal(100));
-        System.out.println(sum(-1));
+        System.out.println(product(-5, 1));
     }
 }
