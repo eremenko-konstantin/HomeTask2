@@ -138,14 +138,16 @@ public class HomeTask2 {
         if(second > 0) {
             return first + product(first, --second);
         }
-        else{
-            return first * second;
+        else if(second < 0){
+            return (first * -1) + product(first, ++second);
         }
+        return 0;
     }
 
     public static void main(String[] args) {
         System.out.println(decimalToBinary(8));
         System.out.println(decimalToOctal(100));
-        System.out.println(product(-5, 1));
+        System.out.println(sum(10));
+        System.out.println(product(3, -5));
     }
 }
