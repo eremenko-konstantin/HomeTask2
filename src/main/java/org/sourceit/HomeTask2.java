@@ -9,7 +9,15 @@ public class HomeTask2 {
      * @return бинарная форма числа
      */
     public static long decimalToBinary(int number) {
-        return -1;
+        int value;
+        String str = "";
+        while(number > 0){
+            value = number%2;
+            number /= 2;
+            str = value + str;
+        }
+        long bin = new Long (str);
+        return bin;
     }
 
     /**
@@ -19,7 +27,15 @@ public class HomeTask2 {
      * @return октальная форма числа
      */
     public static long decimalToOctal(int number) {
-        return -1;
+        int value;
+        String str = "";
+        while(number > 0){
+            value = number%8;
+            number /= 8;
+            str = value + str;
+        }
+        long oct = new Long (str);
+        return oct;
     }
 
     /**
@@ -105,6 +121,9 @@ public class HomeTask2 {
      * @return сумма
      */
     public static long sum(int n) {
+        if (n >= 1) {
+            return sum(n - 1) + n;
+        }
         return 0;
     }
 
@@ -116,7 +135,15 @@ public class HomeTask2 {
      * @return
      */
     public static int product(int first, int second) {
-        return -1;
+        if(second > 1) {
+            return first + product(first, --second);
+        }
+        return first;
     }
 
+    public static void main(String[] args) {
+        System.out.println(decimalToBinary(8));
+        System.out.println(decimalToOctal(100));
+        System.out.println(sum(-1));
+    }
 }
