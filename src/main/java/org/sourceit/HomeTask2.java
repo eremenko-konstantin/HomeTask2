@@ -1,5 +1,9 @@
 package org.sourceit;
 
+import java.util.Arrays;
+import java.util.Random;
+import static java.util.Arrays.deepToString;
+
 public class HomeTask2 {
 
     /**
@@ -12,7 +16,7 @@ public class HomeTask2 {
         int value;
         String str = "";
         while(number > 0){
-            value = number%2;
+            value = number % 2;
             number /= 2;
             str = value + str;
         }
@@ -28,14 +32,14 @@ public class HomeTask2 {
      */
     public static long decimalToOctal(int number) {
         int value;
-        String str = "";
+        String string = "";
         while(number > 0){
-            value = number%8;
+            value = number % 8;
             number /= 8;
-            str = value + str;
+            string = value + string;
         }
-        long oct = new Long (str);
-        return oct;
+        long octal = new Long (string);
+        return octal;
     }
 
     /**
@@ -45,7 +49,15 @@ public class HomeTask2 {
      * @return хексовая форма числа
      */
     public static long decimalToHex(int number) {
-        return -1;
+        int value;
+        String string = "";
+        while(number > 0){
+            value = number % 16;
+            number /= 16;
+            string = value + string;
+        }
+        long hex = new Long (string);
+        return hex;
     }
 
     /**
@@ -55,7 +67,17 @@ public class HomeTask2 {
      * @return десятичное число
      */
     public static int binaryToDecimal(long binary) {
-        return -1;
+        long value = 0;
+        int decimal = 0;
+        int exponent2 = 1;
+        while(binary > 0){
+            value = binary % 10;
+            binary /= 10;
+            value = value * exponent2;
+            decimal += value;
+            exponent2 *= 2;
+        }
+        return decimal;
     }
 
     /**
@@ -65,7 +87,17 @@ public class HomeTask2 {
      * @return десятичное число
      */
     public static int octalToDecimal(long octal) {
-        return -1;
+        long value = 0;
+        int decimal = 0;
+        int exponent8 = 1;
+        while(octal > 0){
+            value = octal % 10;
+            octal /= 10;
+            value = value * exponent8;
+            decimal += value;
+            exponent8 *= 8;
+        }
+        return decimal;
     }
 
     /**
@@ -75,7 +107,17 @@ public class HomeTask2 {
      * @return десятичное число
      */
     public static int hexToDecimal(long hex) {
-        return -1;
+        long value = 0;
+        int decimal = 0;
+        int exponent16 = 1;
+        while(hex > 0){
+            value = hex % 10;
+            hex /= 10;
+            value = value * exponent16;
+            decimal += value;
+            exponent16 *= 16;
+        }
+        return decimal;
     }
 
     /**
@@ -86,7 +128,14 @@ public class HomeTask2 {
      * @return двумерный массив
      */
     public static int[][] generateTwoDimensionArray(int rows, int columns) {
-        return null;
+        int [][] array = new int [rows][columns];
+        Random random = new Random();
+        for(int a = 0; a < rows; a++){
+            for(int b = 0; b < columns; b++ ){
+                array[a][b] = (int)(Math.random()* 10);
+            }
+        }
+        return array;
     }
 
     /**
@@ -99,7 +148,7 @@ public class HomeTask2 {
      * @return индекс строки
      */
     public static int findMaxProduct(int[][] input) {
-        return 1;
+        return 0;
     }
 
     /**
@@ -145,9 +194,21 @@ public class HomeTask2 {
     }
 
     public static void main(String[] args) {
-        System.out.println(decimalToBinary(8));
-        System.out.println(decimalToOctal(100));
-        System.out.println(sum(10));
-        System.out.println(product(3, -5));
+        int[][] input = {
+                {5, 4, 2, 7},
+                {6, 2, 7, 1},
+                {1, 6, 2, 1},
+                {3, 9, 0, 2}
+        };
+        System.out.println("decimalToBinary = " + decimalToBinary(8));
+        System.out.println("decimalToOctal = " + decimalToOctal(100));
+        System.out.println("decimalToHex = " + decimalToHex(255));
+        System.out.println("binaryTodecimal = " + binaryToDecimal(10011));
+        System.out.println("octalTodecimal = " + octalToDecimal(144));
+        System.out.println("hexToDecimal = " + hexToDecimal(100));
+        System.out.println("sum 1 to n = " + sum(10));
+        System.out.println("product = " + product(3, -5));
+        System.out.println("array with random value = " + deepToString(generateTwoDimensionArray(4, 4)));
+        System.out.println(findMaxProduct(input));
     }
 }
