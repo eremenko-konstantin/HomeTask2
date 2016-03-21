@@ -67,15 +67,15 @@ public class HomeTask2 {
      * @return десятичное число
      */
     public static int binaryToDecimal(long binary) {
-        long value = 0;
+        long value;
         int decimal = 0;
-        int exponent2 = 1;
+        int exponent = 0;
         while(binary > 0){
             value = binary % 10;
             binary /= 10;
-            value = value * exponent2;
+            value *= Math.pow(2, exponent);
             decimal += value;
-            exponent2 *= 2;
+            ++exponent;
         }
         return decimal;
     }
@@ -87,15 +87,15 @@ public class HomeTask2 {
      * @return десятичное число
      */
     public static int octalToDecimal(long octal) {
-        long value = 0;
+        long value;
         int decimal = 0;
-        int exponent8 = 1;
+        int exponent = 0;
         while(octal > 0){
             value = octal % 10;
             octal /= 10;
-            value = value * exponent8;
+            value *= Math.pow(8, exponent);
             decimal += value;
-            exponent8 *= 8;
+            ++exponent;
         }
         return decimal;
     }
@@ -107,15 +107,15 @@ public class HomeTask2 {
      * @return десятичное число
      */
     public static int hexToDecimal(long hex) {
-        long value = 0;
+        long value;
         int decimal = 0;
-        int exponent16 = 1;
+        int exponent = 0;
         while(hex > 0){
             value = hex % 10;
             hex /= 10;
-            value = value * exponent16;
+            value *= Math.pow(16, exponent);
             decimal += value;
-            exponent16 *= 16;
+            ++exponent;
         }
         return decimal;
     }
@@ -130,8 +130,8 @@ public class HomeTask2 {
     public static int[][] generateTwoDimensionArray(int rows, int columns) {
         int [][] array = new int [rows][columns];
         Random random = new Random();
-        for(int a = 0; a < rows; a++){
-            for(int b = 0; b < columns; b++ ){
+        for(int a = 0; a < rows; ++a){
+            for(int b = 0; b < columns; ++b ){
                 array[a][b] = (int)(Math.random()* 10);
             }
         }
@@ -148,7 +148,26 @@ public class HomeTask2 {
      * @return индекс строки
      */
     public static int findMaxProduct(int[][] input) {
-        return 0;
+        int rowMas[] = new int[input.length];
+        int maxRow = 0;
+        int index = 0;
+        for(int a = 0; a < input.length; ++a ) {
+            rowMas[a] = 1;
+            for(int b = 0; b < input[a].length; ++b){
+                rowMas[a] *= input[a][b];
+            }
+        }
+        for(int a = 0; a < rowMas.length; ++a){
+            if(rowMas[a] < 0){
+                rowMas[a] *= -1;
+            }
+            if(rowMas[a] > maxRow){
+                maxRow = rowMas[a];
+                index = a;
+            }
+        }
+        return index;
+
     }
 
     /**
@@ -194,11 +213,12 @@ public class HomeTask2 {
     }
 
     public static void main(String[] args) {
+
         int[][] input = {
-                {5, 4, 2, 7},
+                {5, 4, 2, 0},
+                {-8, 2, 7, 1},
                 {6, 2, 7, 1},
-                {1, 6, 2, 1},
-                {3, 9, 0, 2}
+                {3, 9, 10, 0}
         };
         System.out.println("decimalToBinary = " + decimalToBinary(8));
         System.out.println("decimalToOctal = " + decimalToOctal(100));
@@ -206,9 +226,10 @@ public class HomeTask2 {
         System.out.println("binaryTodecimal = " + binaryToDecimal(10011));
         System.out.println("octalTodecimal = " + octalToDecimal(144));
         System.out.println("hexToDecimal = " + hexToDecimal(100));
+        System.out.println("array with random value = " + deepToString(generateTwoDimensionArray(4, 4)));
+        System.out.println("row with max product = " + findMaxProduct(input));
+
         System.out.println("sum 1 to n = " + sum(10));
         System.out.println("product = " + product(3, -5));
-        System.out.println("array with random value = " + deepToString(generateTwoDimensionArray(4, 4)));
-        System.out.println(findMaxProduct(input));
     }
 }
