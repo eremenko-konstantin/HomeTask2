@@ -1,5 +1,6 @@
 package org.sourceit;
 
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Random;
 import static java.util.Arrays.deepToString;
@@ -14,14 +15,16 @@ public class HomeTask2 {
      */
     public static long decimalToBinary(int number) {
         int value;
-        String str = "";
+        long binary = 0;
+        int rank = 1;
         while(number > 0){
             value = number % 2;
             number /= 2;
-            str = value + str;
+            binary += value * rank;
+            rank *= 10;
         }
-        long bin = new Long (str);
-        return bin;
+
+        return binary;
     }
 
     /**
@@ -32,13 +35,15 @@ public class HomeTask2 {
      */
     public static long decimalToOctal(int number) {
         int value;
-        String string = "";
+        long octal = 0;
+        int rank = 1;
         while(number > 0){
             value = number % 8;
             number /= 8;
-            string = value + string;
+            octal += value * rank;
+            rank *= 10;
         }
-        long octal = new Long (string);
+
         return octal;
     }
 
@@ -50,13 +55,14 @@ public class HomeTask2 {
      */
     public static long decimalToHex(int number) {
         int value;
-        String string = "";
+        long hex = 0;
+        int rank = 1;
         while(number > 0){
             value = number % 16;
             number /= 16;
-            string = value + string;
+            hex += value * rank;
+            rank *= 100;
         }
-        long hex = new Long (string);
         return hex;
     }
 
@@ -73,9 +79,8 @@ public class HomeTask2 {
         while(binary > 0){
             value = binary % 10;
             binary /= 10;
-            value *= Math.pow(2, exponent);
+            value *= Math.pow(2, exponent++);
             decimal += value;
-            ++exponent;
         }
         return decimal;
     }
@@ -93,9 +98,8 @@ public class HomeTask2 {
         while(octal > 0){
             value = octal % 10;
             octal /= 10;
-            value *= Math.pow(8, exponent);
+            value *= Math.pow(8, exponent++);
             decimal += value;
-            ++exponent;
         }
         return decimal;
     }
@@ -113,9 +117,8 @@ public class HomeTask2 {
         while(hex > 0){
             value = hex % 10;
             hex /= 10;
-            value *= Math.pow(16, exponent);
+            value *= Math.pow(16, exponent++);
             decimal += value;
-            ++exponent;
         }
         return decimal;
     }
@@ -130,8 +133,8 @@ public class HomeTask2 {
     public static int[][] generateTwoDimensionArray(int rows, int columns) {
         int [][] array = new int [rows][columns];
         Random random = new Random();
-        for(int a = 0; a < rows; ++a){
-            for(int b = 0; b < columns; ++b ){
+        for(int a = 0; a < rows; a++){
+            for(int b = 0; b < columns; b++ ){
                 array[a][b] = (int)(Math.random()* 10);
             }
         }
@@ -148,21 +151,21 @@ public class HomeTask2 {
      * @return индекс строки
      */
     public static int findMaxProduct(int[][] input) {
-        int rowMas[] = new int[input.length];
+        int ProductRowArray[] = new int[input.length];
         int maxRow = 0;
         int index = 0;
-        for(int a = 0; a < input.length; ++a ) {
-            rowMas[a] = 1;
-            for(int b = 0; b < input[a].length; ++b){
-                rowMas[a] *= input[a][b];
+        for(int a = 0; a < input.length; a++) {
+            ProductRowArray[a] = 1;
+            for(int b = 0; b < input[a].length; b++){
+                ProductRowArray[a] *= input[a][b];
             }
         }
-        for(int a = 0; a < rowMas.length; ++a){
-            if(rowMas[a] < 0){
-                rowMas[a] *= -1;
+        for(int a = 0; a < ProductRowArray.length; a++){
+            if(ProductRowArray[a] < 0){
+                ProductRowArray[a] *= -1;
             }
-            if(rowMas[a] > maxRow){
-                maxRow = rowMas[a];
+            if(ProductRowArray[a] > maxRow){
+                maxRow = ProductRowArray[a];
                 index = a;
             }
         }
@@ -177,7 +180,34 @@ public class HomeTask2 {
      * @return массив простых чисел.
      */
     public static int[] getSimple(int n) {
-        return null;
+        int lengthSimple = 0;
+        for(int a = 2; a < n; a++) {
+            int counter = 0;
+            for(int b = 1; b <= a; b++) {
+                if((a % b) == 0) {
+                    counter++;
+                }
+            }
+            if(counter == 2) {
+                lengthSimple++;
+            }
+        }
+        int simpleArray[] = new int[lengthSimple];
+        int cellArray = 0;
+        for(int a = 2; a < n; a++) {
+            boolean condition = true;
+            for (int b = 2; b < a; b++) {
+                if (a % b == 0) {
+                    condition = false;
+                    break;
+                }
+            }
+            if(condition){
+                simpleArray[cellArray] = a;
+                cellArray++;
+            }
+        }
+        return simpleArray;
     }
 
     // Рекурсивные методы. Реализовать их нужно с помощью рекурсии.
@@ -206,30 +236,31 @@ public class HomeTask2 {
         if(second > 0) {
             return first + product(first, --second);
         }
-        else if(second < 0){
+        if(second < 0){
             return (first * -1) + product(first, ++second);
         }
         return 0;
     }
 
     public static void main(String[] args) {
-
         int[][] input = {
-                {5, 4, 2, 0},
-                {-8, 2, 7, 1},
+                {5, 4, 2, 0, 20},
+                {-8, 2, 7},
                 {6, 2, 7, 1},
-                {3, 9, 10, 0}
+                {3, 0}
         };
         System.out.println("decimalToBinary = " + decimalToBinary(8));
         System.out.println("decimalToOctal = " + decimalToOctal(100));
-        System.out.println("decimalToHex = " + decimalToHex(255));
+        System.out.println("decimalToHex = " + decimalToHex(100));
         System.out.println("binaryTodecimal = " + binaryToDecimal(10011));
         System.out.println("octalTodecimal = " + octalToDecimal(144));
         System.out.println("hexToDecimal = " + hexToDecimal(100));
         System.out.println("array with random value = " + deepToString(generateTwoDimensionArray(4, 4)));
         System.out.println("row with max product = " + findMaxProduct(input));
-
+        System.out.println("getSimple = " + Arrays.toString(getSimple(100)));
         System.out.println("sum 1 to n = " + sum(10));
         System.out.println("product = " + product(3, -5));
     }
+
+
 }

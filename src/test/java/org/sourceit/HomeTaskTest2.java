@@ -84,7 +84,7 @@ public class HomeTaskTest2 {
                 {10, 5, 3, 4}
 
         };
-        Assert.assertEquals(HomeTask2.findMaxProduct(array), 3);
+        Assert.assertEquals(HomeTask2.findMaxProduct(array), 2);
     }
 
     @Test
